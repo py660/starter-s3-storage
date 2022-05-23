@@ -2,7 +2,9 @@ const express = require('express')
 const app = express()
 const AWS = require("aws-sdk");
 const s3 = new AWS.S3()
+const bodyParser = require('body-parser');
 
+app.use(bodyParser.json())
 
 // curl -i https://some-app.cyclic.app/myFile.txt
 app.get('*', async (req,res) => {
@@ -28,12 +30,14 @@ app.get('*', async (req,res) => {
 })
 
 
-// curl -i -XPUT https://some-app.cyclic.app/myFile.txt
+// curl -i -XPUT --data '{"k1":"value 1", "k2": "value 2"}' -H 'Content-type: application/json' https://some-app.cyclic.app/myFile.txt
 app.put('*', async (req,res) => {
   let filename = req.path.slice(1)
 
+  console.log(typeof req.body)
+
   await s3.putObject({
-    Body: JSON.stringify({"now":new Date().toString()}),
+    Body: JSON.stringify(req.body),
     Bucket: process.env.BUCKET,
     Key: filename,
   }).promise()
