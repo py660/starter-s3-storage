@@ -59,33 +59,6 @@ app.delete('*', async (req,res) => {
   res.send('ok').end()
 })
 
-
-// (async () => {
-//   // Store something
-//   await s3.putObject({
-//     Body: JSON.stringify({"now":new Date().toString()}),
-//     Bucket: process.env.BUCKET,
-//     Key: "some_files/my_file.json",
-//   }).promise()
-
-//   // Read the file
-//   let my_file = await s3.getObject({
-//     Bucket: process.env.BUCKET,
-//     Key: "some_files/my_file.json",
-//   }).promise()
-
-//   // Log file content
-//   console.log(JSON.parse(my_file.Body.toString()))
-
-//   let res = await s3.deleteObject({
-//     Bucket: process.env.BUCKET,
-//     Key: "some_files/my_file.json",
-//   }).promise()
-
-//   console.log(res)
-// })()
-
-
 // /////////////////////////////////////////////////////////////////////////////
 // Catch all handler for all other request.
 app.use('*', (req,res) => {
