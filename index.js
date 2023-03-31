@@ -8,6 +8,8 @@ app.use(bodyParser.json())
 
 // curl -i https://some-app.cyclic.app/myFile.txt
 app.get('*', async (req,res) => {
+  console.log("GET:", req.cookies);
+  
   let filename = req.path.slice(1)
 
   try {
@@ -32,9 +34,11 @@ app.get('*', async (req,res) => {
 
 // curl -i -XPUT --data '{"k1":"value 1", "k2": "value 2"}' -H 'Content-type: application/json' https://some-app.cyclic.app/myFile.txt
 app.put('*', async (req,res) => {
+  console.log("PUT:", req.cookies)
+  
   let filename = req.path.slice(1)
 
-  console.log(typeof req.body)
+  //console.log(typeof req.body)
 
   await s3.putObject({
     Body: JSON.stringify(req.body),
@@ -48,6 +52,7 @@ app.put('*', async (req,res) => {
 
 // curl -i -XDELETE https://some-app.cyclic.app/myFile.txt
 app.delete('*', async (req,res) => {
+  console.log("DELETE:", req.cookies)
   let filename = req.path.slice(1)
 
   await s3.deleteObject({
